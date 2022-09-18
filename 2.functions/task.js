@@ -36,8 +36,9 @@ function makeWork(arrOfArr, func) {
     let max = -Infinity;
 
     for (let i = 0; i < arrOfArr.length; ++i) {
-        if (max < func(arrOfArr[i])) {
-            max = func(arrOfArr[i]);
+        const funcResult = func(arrOfArr[i]);
+        if (max < funcResult) {
+            max = funcResult;
         }
     }
   
@@ -59,9 +60,6 @@ function worker2(arr) {
             min = arr[i];
         }
     }
-
-    difference = Math.abs(max - min);
-
-    return { min: min, max: max, difference: difference };
+    return Math.abs(max - min);
 }
 
