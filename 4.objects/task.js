@@ -26,8 +26,8 @@ Student.prototype.addMarks = function (...newMarks) {
 Student.prototype.getAverage = function () {
     let sum = 0;
     let Average;
-    for (let mark of marks) sum += mark;
-    Average = sum / marks.length;
+    for (let mark of this.marks) sum += mark;
+    Average = sum / this.marks.length;
     return Average;
 }
 
