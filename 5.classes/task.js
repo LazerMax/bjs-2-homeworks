@@ -88,12 +88,11 @@ class Library {
         let tmpI = this.books.name.indexOf(bookName);
         if(tmpI === -1){
             return null;
-        } else{
+        } else {
             let tmp = this.books[tmpI];
             this.books.splice(tmpI, 1);
             return tmp;
         }
-        return tmpI;
     }
 
 }
