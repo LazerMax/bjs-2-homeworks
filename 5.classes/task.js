@@ -63,29 +63,29 @@ class DetectiveBook extends  Book{
     }
 }
 
-class Library{
+class Library {
     constructor(name) {
         this.name = name;
         this.books = [];
     }
 
-    addBook(book){
-        if (book.state > 30){
+    addBook(book) {
+        if (book.state > 30) {
             this.books.push(book);
         }
     }
 
-    findBookBy(type, value){
-        if(this.books.includes(type, value)){
-            return this.books.find(type, value);
-        } else {
+    findBookBy(key, value) {
+        const found = this.books.find(element => element.key === value);
+        if (found === undefined) {
             return null;
+        } else {
+            return found;
         }
     }
 
-    giveBookByName(bookName){
+    giveBookByName(bookName) {
         let tmpI = this.books.name.indexOf(bookName);
-        console.log(tmpI);
         if(tmpI === -1){
             return null;
         } else{
@@ -93,9 +93,10 @@ class Library{
             this.books.splice(tmpI, 1);
             return tmp;
         }
+        return tmpI;
     }
-}
 
+}
 //дз 3
 
 class Student{
