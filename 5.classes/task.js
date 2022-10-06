@@ -76,7 +76,7 @@ class Library {
     }
 
     findBookBy(key, value) {
-        const found = this.books.find(element => element.key === value);
+        const found = this.books.find(element => element[key] === value);
         if (found === undefined) {
             return null;
         } else {
@@ -85,12 +85,12 @@ class Library {
     }
 
     giveBookByName(bookName) {
-        let tmpI = this.books.name.indexOf(bookName);
-        if(tmpI === -1){
+        const found = this.books.findIndex(element => element.name === bookName);
+        if(found === -1){
             return null;
         } else {
-            let tmp = this.books[tmpI];
-            this.books.splice(tmpI, 1);
+            let tmp = this.books[found];
+            this.books.splice(found, 1);
             return tmp;
         }
     }
@@ -104,25 +104,27 @@ class Student{
     }
 
     addMark(mark, subjectName) {
-        if (mark > 5 || mark < 1){
+        if (mark > 5 || mark < 1) {
             console.log("Ошибка, оценка должна быть числом от 1 до 5");
-        }
-        let newMark = {
-            subjectName: subjectName,
-            mark: mark
-        };
-    if (this.marks === undefined) {
-        this.marks = [newMark];
-    } else {
-        this.marks.push(newMark);
+        } else {
+            let newMark = {
+                subjectName: subjectName,
+                mark: mark
+            };
+            if (this.marks === undefined) {
+                this.marks = [newMark];
+            } else {
+                this.marks.push(newMark);
+            }
         }
     }
+
 
     getAverage() {
     let sum = 0;
     let Average;
     for (let mark of this.marks) {
-        sum += mark;
+        sum += mark.mark;
     }
     Average = sum / this.marks.length;
     return Average;
@@ -133,13 +135,14 @@ class Student{
         let kol = 0;
         let Average;
         for (let mark of this.marks) {
-            if (subjectName === this.marks.subjectName) {
-                sum += mark;
+            if (subjectName === mark.subjectName) {
+                sum += mark.mark;
                 ++kol;
             }
+        }
             Average = sum / kol;
             return Average;
-        }
+
     }
 
     exclude(reason) {
