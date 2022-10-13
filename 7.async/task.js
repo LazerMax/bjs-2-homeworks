@@ -39,6 +39,8 @@ class AlarmClock {
     }
 
     start(){
+
+        checkClock = checkClock.bind(this);
       function checkClock(call){
           if(call.time === this.getCurrentFormattedTime()){
               call.callback();
