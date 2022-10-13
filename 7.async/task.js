@@ -9,38 +9,33 @@ class AlarmClock {
         if (id === undefined) {
             throw new Error('error text');
         }
-        if (this.alarmCollection.includes(id)) {
+
+        if (this.alarmCollection.some(element => element.id === id)) {
             return console.error("Будильник с таким id уже существует");
 
-        } else {
-            let call = {
-                id: id,
-                callback: callback(),
-                time: time
-            }
-
-            if (this.alarmCollection.length === 0) {
-                this.alarmCollection = [call];
-            } else {
-                this.alarmCollection.push(call);
-            }
         }
+
+        let call = {id, callback, time};
+        this.alarmCollection.push(call);
+
     }
 
     removeClock(id){
-        const found = this.alarmCollection.findIndex(element => element.id === id);
-        let tmp = this.alarmCollection.length;
-        this.alarmCollection.splice(found, 1);
-        if(tmp > this.alarmCollection.length){
-            return true;
-        } else{
-            return false;
-        }
+    const found = this.alarmCollection.findIndex(element => element.id === id);
+
+    if(found === -1){
+        return false;
     }
 
+    this.alarmCollection.splice(found, 1);
+    return true;
+}
+
     getCurrentFormattedTime(){
-        const date = new Date();
-        return((date.getHours().toString()+":"+date.getMinutes().toString()));
+        return new Date().toLocaleTimeString("ru-Ru", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
     }
 
     start(){
@@ -49,15 +44,15 @@ class AlarmClock {
               call.callback();
           }
       }
-      if(this.timerId === undefined){
+      if(this.timerId === null){
         this.timerId = setInterval(() => this.alarmCollection.forEach(element => checkClock(element)), 1000);
       }
     }
 
     stop(){
-        if(this.timerId != undefined){
+        if(this.timerId != null){
             clearInterval(this.timerId);
-            this.timerId = undefined;
+            this.timerId = null;
         }
     }
 
@@ -68,6 +63,6 @@ class AlarmClock {
 
     clearAlarms(){
         this.stop();
-        this.alarmCollection.length = 0;
+        this.alarmCollection = [];
     }
 }
