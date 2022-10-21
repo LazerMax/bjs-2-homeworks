@@ -25,11 +25,9 @@ function cachingDecoratorNew(func) {
         }
 
         let result = func(...args);
-        if(cache.length === 0){
-            cache = [{hash: hash, value: result}];
-        } else {
-            cache.push({hash: hash, value: result});
-        }
+        
+        cache.push({hash: hash, value: result});
+        
         if (cache.length > 5) {
         cache.shift();
         }
@@ -46,6 +44,7 @@ function debounceDecoratorNew(func, delay) {
     let timeoutId = null;
      function wrapper(...args) {
          ++wrapper.allCount;
+         clearTimeout(timeoutId);
          console.log(wrapper.allCount);
         if (timeoutId === null) {
             func(...args);
@@ -58,6 +57,5 @@ function debounceDecoratorNew(func, delay) {
              ++wrapper.count;
          }, delay);
     }
-    clearTimeout(timeoutId);
     return wrapper;
 }
